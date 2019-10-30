@@ -1,0 +1,14 @@
+{
+  "name"        : "Console-Generator",
+  "description" : "Remember `composer clearcache`",
+  "version"     : "0.0.1",
+  "require"     : {
+    "php"         : ">=7.2.0"
+  },
+  "repositories": [
+    {
+      "type"      : "vcs",
+      "url"       : "git@github.com:andy87/yiisoft-console-generator.git"
+    }
+  ]
+}
