@@ -6,6 +6,37 @@
     Система для генерации Model и CRUD
     <hr>
 </p>
+composer.json  
+
+```
+"require": {
+    ...
+    "andy87/yiisoft-console-generator" : "1.0.1"
+},
+...
+"repositories": [
+    ...,
+    {
+        "type"                  : "package",
+        "package"               : {
+            "name"                  : "andy87/yiisoft-console-generator",
+            "version"               : "1.0.1",
+            "source"                : {
+                "type"                  : "git",
+                "reference"             : "master",
+                "url"                   : "https://github.com/andy87/yiisoft-console-generator"
+            },
+            "autoload": {
+                "classmap": ["src/"],
+                "files": ["mapper.php"]
+            }
+        }
+    }
+]
+```
+<hr>
+
+<br>
 
 Примеры консольных команд.  
 
