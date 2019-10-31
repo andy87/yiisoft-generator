@@ -1,6 +1,6 @@
 <?php
 
-namespace andy87\yii2\console\models\generator;
+namespace andy87\yii2\generator\console\models\generator;
 
 use yii\gii\generators\crud\Generator;
 

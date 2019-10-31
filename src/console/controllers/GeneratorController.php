@@ -1,15 +1,15 @@
 <?php
 
-namespace andy87\yii2\console\controllers;
+namespace andy87\yii2\generator\console\controllers;
 
 use Yii;
 use yii\gii\CodeFile;
 use yii\console\Controller;
 
-use andy87\yii2\console\components\Generator;
-use andy87\yii2\console\models\generator\Crud;
-use andy87\yii2\console\models\generator\Model;
-use andy87\yii2\console\models\generator\Root;
+use andy87\yii2\generator\console\components\Generator;
+use andy87\yii2\generator\console\models\generator\Crud;
+use andy87\yii2\generator\console\models\generator\Model;
+use andy87\yii2\generator\console\models\generator\Root;
 
 /**
  * Class GeneratorController

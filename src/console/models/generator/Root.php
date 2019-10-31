@@ -1,11 +1,11 @@
 <?php
 
-namespace andy87\yii2\console\models\generator;
+namespace andy87\yii2\generator\console\models\generator;
 
 use yii\BaseYii;
 use yii\base\Model;
 
-use andy87\yii2\console\components\Generator;
+use andy87\yii2\generator\console\components\Generator;
 
 /**
  * Class Model

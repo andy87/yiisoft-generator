@@ -27,8 +27,11 @@ composer.json
                 "url"                   : "https://github.com/andy87/yiisoft-console-generator"
             },
             "autoload": {
-                "classmap": ["src/"],
-                "files": ["mapper.php"]
+                "psr-4": {
+                    "andy87\\yii2\\generator\\console\\components\\": "src/console/components",
+                    "andy87\\yii2\\generator\\console\\controllers\\": "src/console/controllers",
+                    "andy87\\yii2\\generator\\console\\models\\generator\\": "src/console/models/generator"
+                }
             }
         }
     }

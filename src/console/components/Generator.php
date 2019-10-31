@@ -1,13 +1,13 @@
 <?php
 
-namespace andy87\yii2\console\components;
+namespace andy87\yii2\generator\console\components;
 
 use Yii;
 use yii\base\Component;
 
-use andy87\yii2\console\models\generator\Root;
-use andy87\yii2\console\models\generator\Model;
-use andy87\yii2\console\models\generator\Crud;
+use andy87\yii2\generator\console\models\generator\Root;
+use andy87\yii2\generator\console\models\generator\Model;
+use andy87\yii2\generator\console\models\generator\Crud;
 
 /**
  * Class Generator
