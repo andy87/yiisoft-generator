@@ -11,7 +11,7 @@
 
 ##### INSTALL
 Добавить в `composer.json`  
-<small>require:</small>  
+<small>require</small>  
 ```
 "require": {
     ...
