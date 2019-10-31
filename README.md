@@ -6,6 +6,7 @@
     Система для генерации Model и CRUD
     <hr>
 </p>
+
 composer.json  
 
 ```
@@ -37,7 +38,6 @@ composer.json
     }
 ]
 ```
-<hr>
 
 <br>
 
