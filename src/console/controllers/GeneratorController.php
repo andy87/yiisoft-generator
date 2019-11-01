@@ -48,7 +48,7 @@ class GeneratorController extends Controller
      *  на имя класа сгенерируемое стандартными средстави Yii2 на основе имени таблицы
      *  ( Например для таблицы: custom_user, будет сгенерировано имя: CustomUser )
      *
-     * @var object
+     * @var array
      */
     public $config      = [];
 
@@ -58,12 +58,12 @@ class GeneratorController extends Controller
      * @var array
      */
     public $default     = [
-        'model'         => (object) [
+        'model'             => [
             'modelClass'            => '#TableName#',
             'ns'                    => "app\\models",
             'baseClass'             => "yii\\base\\Model"
         ],
-        'crud'          => (object) [
+        'crud'              => [
             'modelClass'            => "app\\models\\#TableName#",
             'viewPath'              => "backend\\views\\#table-name#",
             'baseControllerClass'   => "yii\\web\\Controller",
@@ -78,6 +78,27 @@ class GeneratorController extends Controller
      * @var array
      */
     public $filter      = [ 'migration' ];
+
+    /**
+     * Void
+     */
+    public function init ()
+    {
+        parent::init();
+
+        foreach ( $this->default as $key => $arr )
+        {
+            $this->default[$key] = (object) $arr;
+        }
+
+        if ( count( $this->config ) )
+        {
+            foreach ( $this->config as $key => $arr )
+            {
+                $this->config[$key] = (object) $arr;
+            }
+        }
+    }
 
     /**
      *  Генерация Model
