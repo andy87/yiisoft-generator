@@ -117,12 +117,7 @@ class GeneratorController extends Controller
 
         $result = $this->common( 'Model', $items, $params, $this->filter );
 
-        print_r($result);
-
-        foreach ( $result as $tableName => $item )
-        {
-            echo "\r\n\r\n Table: {$tableName} \r\n Path: {$item['path']}\r\n Status: {$item['status']}";
-        }
+        $this->resp( $result );
     }
 
     /**
@@ -349,7 +344,7 @@ class GeneratorController extends Controller
 
             $params->content = $this->classTemplateCore( $params, $template );
 
-            $path   = Yii::getAlias('@' . str_replace('\\\\','/', $params->ns ) . "\{$tableName}.php" );
+            $path   = Yii::getAlias('@' . str_replace('\\\\','/', $params->ns ) . "\\{$tableName}.php" );
 
             $file   = new CodeFile( $path, $params->content );
 
@@ -525,13 +520,19 @@ PHP;
     /**
      *  Ass
      *
-     * @param $resp
+     * @param $result
      */
-    public function resp( $resp )
+    public function resp( $result )
     {
-        echo "\r\n";
+        foreach ( $result as $tableName => $files )
+        {
+            echo "\r\n\r\n Table: {$tableName}";
 
-        print_r( $resp );
+            foreach ( $files as $file )
+            {
+                echo "\r\n Path: {$file['path']}\r\n Status: {$file['status']}";
+            }
+        }
     }
 
 
