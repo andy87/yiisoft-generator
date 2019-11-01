@@ -117,6 +117,7 @@ class GeneratorController extends Controller
 
         $result = $this->common( 'Model', $items, $params, $this->filter );
 
+        print_r($result);
 
         foreach ( $result as $tableName => $item )
         {
@@ -348,7 +349,7 @@ class GeneratorController extends Controller
 
             $params->content = $this->classTemplateCore( $params, $template );
 
-            $path   = Yii::getAlias('@' . str_replace('\\\\','/', $params->ns ) . '\#TableName#.php' );
+            $path   = Yii::getAlias('@' . str_replace('\\\\','/', $params->ns ) . "\{$tableName}.php" );
 
             $file   = new CodeFile( $path, $params->content );
 
