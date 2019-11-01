@@ -346,7 +346,7 @@ class GeneratorController extends Controller
 
             $params     = (object) [];
             $params->ns         = $data->ns;
-            $params->modelClass = $tableName;
+            $params->modelClass = str_replace('#TableName#', $tableName, $data->modelClass );
             $params->baseClass  = '\\' . str_replace('#TableName#', $tableName, $data->baseClass );
             $params->content    = $this->classTemplateCore( $params, $template );
 
