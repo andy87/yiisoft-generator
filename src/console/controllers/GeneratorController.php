@@ -162,7 +162,7 @@ class GeneratorController extends Controller
     {
         $resp   = [];
 
-        $generator  = "console\\models\\generator\\{$model}";
+        $generator  = "andy87\\generator\\console\\models\\generator\\{$model}";
 
         foreach ( $items as $index => $tableName )
         {
