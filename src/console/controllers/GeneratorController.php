@@ -117,9 +117,12 @@ class GeneratorController extends Controller
 
         $result = $this->common( 'Model', $items, $params, $this->filter );
 
-        $this->resp( $result );
-    }
 
+        foreach ( $result as $tableName => $item )
+        {
+            echo "\r\n {$tableName} : {$item['path']}\r\n Status : {$item['status']}";
+        }
+    }
 
     /**
      *  Генерация CRUD
@@ -177,7 +180,7 @@ class GeneratorController extends Controller
              */
             $generator  = new $generator();
 
-            $resp[]     = $generator->create( $tableName, $data );
+            $resp[ $tableName ] = $generator->create( $tableName, $data );
         }
 
        return $resp;
@@ -319,39 +322,38 @@ class GeneratorController extends Controller
 
             $file   = [ Generator::insertTableCase( $file, $tableName ) ];
 
-            $result[] = $model->generate( $file );
+            $result[ $tableName ] = $model->generate( $file );
         }
 
         return $result;
     }
 
-    public function classTemplate2( $data, $template = 'default' )
+    public function createCustomModel( $items, $data, $template )
     {
-        $resp = false;
+        $result = [];
 
-        $root = Yii::getAlias('@console/tpl');
+        $model  = new Model();
 
-        if ( is_object($data) ) $data = (array) $data;
+        $items  = $this->getList( $items );
 
-        if ( is_dir($root) )
+        foreach ( $items as $tableName )
         {
-            $path = "{$root}/{$template}.php";
+            $params = $data;
 
-            $resp = $this->classTemplateCore( $data, $path );
+            $params = Generator::insertTableCase( $params, $tableName );
+
+            $params->content = $this->classTemplateCore( $params, $template );
+
+            $path   = Yii::getAlias('@' . str_replace('\\\\','/', $params->ns ) . '\#TableName#.php' );
+
+            $file   = new CodeFile( $path, $params->content );
+
+            $file   = [ Generator::insertTableCase( $file, $tableName ) ];
+
+            $result[ $tableName ] = $model->generate( $file );
         }
 
-        if ( !$resp )
-        {
-            $root = '../../tpl';
-
-            $path = "{$root}/{$template}.php";
-
-            if ( !file_exists($path) ) $path = "{$root}/default.php";
-
-            $resp = $this->classTemplateCore( $data, $path );
-        }
-
-        return $resp;
+        return $result;
     }
 
     public function classTemplateCore( $data, $path )
