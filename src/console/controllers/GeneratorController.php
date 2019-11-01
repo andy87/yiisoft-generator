@@ -12,7 +12,7 @@ use andy87\yii2\generator\console\models\generator\Model;
 use andy87\yii2\generator\console\models\generator\Root;
 
 /**
- * Class GeneratorController
+ * Class GeneratorController - TEST
  *
  *      Controller
  *
