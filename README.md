@@ -15,7 +15,7 @@
 ```
 "require": {
     ...
-    "andy87/yiisoft-console-generator" : "1.0.1"
+    "andy87/yiisoft-generator" : "1.0.1"
 },
 ```  
 <small>repositories</small>  
@@ -25,12 +25,12 @@
     {
         "type"                  : "package",
         "package"               : {
-            "name"                  : "andy87/yiisoft-console-generator",
+            "name"                  : "andy87/yiisoft-generator",
             "version"               : "1.0.1",
             "source"                : {
                 "type"                  : "git",
                 "reference"             : "master",
-                "url"                   : "https://github.com/andy87/yiisoft-console-generator"
+                "url"                   : "https://github.com/andy87/yiisoft-generator"
             },
             "autoload": {
                 "psr-4": {

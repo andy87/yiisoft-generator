@@ -1,5 +1,5 @@
 {
-  "name"        : "Console-Generator",
+  "name"        : "Generator",
   "description" : "Remember `composer clearcache`",
   "version"     : "0.0.1",
   "require"     : {
@@ -8,7 +8,7 @@
   "repositories": [
     {
       "type"      : "vcs",
-      "url"       : "git@github.com:andy87/yiisoft-console-generator.git"
+      "url"       : "git@github.com:andy87/yiisoft-generator.git"
     }
   ]
 }
