@@ -540,6 +540,11 @@ PHP;
             foreach ( $files as $file )
             {
                 echo "\r\n   Path : {$file['path']}\r\n Status - {$file['status']}";
+
+                if ( $file['status'] == 'error' )
+                {
+                    echo "\r\n Description : {$file['description']}";
+                }
             }
         }
     }

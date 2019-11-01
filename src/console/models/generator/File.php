@@ -136,10 +136,21 @@ class File extends Model
 
         $this->save();
 
-        return [
-            'path'      => $path,
-            'status'    => ( count($this->error) ) ? $this->error : 'OK'
-        ];
+
+        $resp = [];
+
+        if ( count($this->error) )
+        {
+            $resp = $this->error;
+
+        } else {
+
+            $resp['status'] = 'OK';
+        }
+
+        $resp['path'] = $path;
+
+        return $resp;
     }
 
     /**
