@@ -310,7 +310,8 @@ class GeneratorController extends Controller
 
             $params = Generator::insertTableCase( $params, $tableName );
 
-            $params->content = $this->classTemplate( $params, $template );
+            $params->content = $this->classTemplate2( $params, $template );
+            //$params->content = $this->classTemplate( $params, $template );
 
             $path   = Yii::getAlias('@' . str_replace('\\\\','/', $params->ns ) . '\#TableName#.php' );
 
@@ -322,6 +323,45 @@ class GeneratorController extends Controller
         }
 
         return $result;
+    }
+
+    public function classTemplate2( $data, $template = 'default' )
+    {
+        $resp = false;
+
+        $root = Yii::getAlias('@console/tpl');
+
+        if ( is_dir($root) )
+        {
+            $path = "{$root}/{$template}.php";
+
+            $resp = $this->classTemplateCore( $data, $path );
+        }
+
+        if ( !$resp )
+        {
+            $root = '../../tpl';
+
+            $path = "{$root}/{$template}.php";
+
+            if ( !file_exists($path) ) $path = "{$root}/default.php";
+
+            $resp = $this->classTemplateCore( $data, $path );
+        }
+
+        return $resp;
+    }
+
+    public function classTemplateCore( $data, $path )
+    {
+        $resp = false;
+
+        if ( file_exists($path) )
+        {
+            $resp = Yii::$app->view->renderFile( $path, $data );
+        }
+
+        return $resp;
     }
 
     /**
