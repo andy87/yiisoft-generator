@@ -485,7 +485,7 @@ PHP;
         $tables = ( $value == 'all' )  ? Root::getAllTables() : false;
 
         $names  = ( !$tables )
-            ? ( ( strpos($value, ',') !== -1 ) ? explode(',', $value ) : [ $value ] )
+            ? ( ( strpos($value, ',') !== false ) ? explode(',', $value ) : [ $value ] )
             : $tables ;
 
         return $names;
