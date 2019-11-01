@@ -5,7 +5,6 @@ namespace andy87\yii2\generator\console\components;
 use Yii;
 use yii\base\Component;
 
-use andy87\yii2\generator\console\models\generator\Root;
 use andy87\yii2\generator\console\models\generator\Model;
 use andy87\yii2\generator\console\models\generator\Crud;
 
@@ -40,7 +39,7 @@ class Generator extends Component
             'baseClass'             => $baseClass,
         ];
 
-        $items  = ( $tableName === 'all' ) ? Root::getAllTables() : [ $tableName ];
+        $items  = ( $tableName === 'all' ) ? Model::getAllTables() : [ $tableName ];
 
         return self::common( 'Model', $items, $data );
     }
@@ -67,7 +66,7 @@ class Generator extends Component
             'controllerClass'       => $controllerClass,
         ];
 
-        $items  = ( $tableName === 'all' ) ? Root::getAllTables() : [ $tableName ];
+        $items  = ( $tableName === 'all' ) ? Crud::getAllTables() : [ $tableName ];
 
         return self::common( 'Crud', $items, $data );
     }

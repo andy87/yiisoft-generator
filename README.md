@@ -44,6 +44,19 @@
 ]
 ```
 
+Создать файл `console/controllers/GenerateController.php`
+```
+<?php
+
+namespace console\controllers;
+
+use andy87\yii2\generator\console\controllers\GeneratorController;
+
+class GenerateController extends GeneratorController
+{
+    // ...
+}
+```
 <br>
 
 ## Примеры консольных команд.  
