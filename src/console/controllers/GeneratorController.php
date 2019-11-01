@@ -10,6 +10,8 @@ use andy87\yii2\generator\console\components\Generator;
 use andy87\yii2\generator\console\models\generator\Crud;
 use andy87\yii2\generator\console\models\generator\Model;
 use andy87\yii2\generator\console\models\generator\Root;
+use yii\helpers\Inflector;
+use yii\helpers\StringHelper;
 
 /**
  * Class GeneratorController - TEST
@@ -340,20 +342,23 @@ class GeneratorController extends Controller
 
         foreach ( $items as $tableName )
         {
-            $params = Generator::insertTableCase( $data, $tableName );
+            $tableName  = Inflector::camelize(StringHelper::basename($tableName));
 
-            $params->content = $this->classTemplateCore( $params, $template );
+            $params     = (object) [];
+            $params->ns         = $data->ns;
+            $params->modelClass = $tableName;
+            $params->baseClass  = '\\' . str_replace('#TableName#', $tableName, $data->baseClass );
+            $params->content    = $this->classTemplateCore( $params, $template );
 
-            $path   = Yii::getAlias('@' . str_replace('\\\\','/', $params->ns ) . "\\{$tableName}.php" );
-
+            $alias  = str_replace(['\\\\','\\'],'/', $params->ns );
+            $path   = Yii::getAlias("@{$alias}/{$tableName}.php" );
             $file   = new CodeFile( $path, $params->content );
-
             $file   = [ Generator::insertTableCase( $file, $tableName ) ];
 
             $result[ $tableName ] = $model->generate( $file );
         }
 
-        return $result;
+        $this->resp( $result );
     }
 
     public function classTemplateCore( $data, $path )
@@ -490,6 +495,8 @@ PHP;
     {
         $tables = ( $value == 'all' )  ? Root::getAllTables() : false;
 
+        unset($tables['migration']);
+
         $names  = ( !$tables )
             ? ( ( strpos($value, ',') !== false ) ? explode(',', $value ) : [ $value ] )
             : $tables ;
@@ -528,7 +535,7 @@ PHP;
     {
         foreach ( $result as $tableName => $files )
         {
-            echo "\r\n\r\n  Table   `{$tableName}`";
+            echo "\r\n\r\n  Table  `{$tableName}`";
 
             foreach ( $files as $file )
             {
