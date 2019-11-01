@@ -331,6 +331,8 @@ class GeneratorController extends Controller
 
         $root = Yii::getAlias('@console/tpl');
 
+        if ( is_object($data) ) $data = (array) $data;
+
         if ( is_dir($root) )
         {
             $path = "{$root}/{$template}.php";
