@@ -7,6 +7,8 @@ use yii\base\Component;
 
 use andy87\yii2\generator\console\models\generator\Model;
 use andy87\yii2\generator\console\models\generator\Crud;
+use yii\helpers\Inflector;
+use yii\helpers\StringHelper;
 
 /**
  * Class Generator
@@ -148,23 +150,7 @@ class Generator extends Component
      */
     public static function generateCaseCamel( $name = '' )
     {
-        if ( strpos( $name, '_') !== -1 )
-        {
-            $data   = explode('_', $name);
-
-            $resp   = '';
-
-            foreach( $data as $item )
-            {
-                if ( !strlen($item) ) continue;
-
-                $resp .= ucfirst($item);
-            }
-
-        } else {
-
-            $resp   = ucfirst($name);
-        }
+        $resp = Inflector::camelize( StringHelper::basename($name) );
 
         return $resp;
     }
@@ -178,23 +164,7 @@ class Generator extends Component
      */
     public static function generateCaseKebab( $name = '' )
     {
-        if ( strpos( $name, '_') !== -1 )
-        {
-            $data   = explode('_', $name);
-
-            foreach( $data as $i => $item )
-            {
-                if ( !strlen($item) ) continue;
-
-                $data[ $i ] = mb_strtolower($item);
-            }
-
-            $resp   = implode('-', $data);
-
-        } else {
-
-            $resp   = mb_strtolower($name);
-        }
+        $resp = Inflector::camel2id( StringHelper::basename($name) );
 
         return $resp;
     }
@@ -208,23 +178,9 @@ class Generator extends Component
      */
     public static function generateCaseSnake( $name = '' )
     {
-        if ( strpos( $name, '_') !== -1 )
-        {
-            $data   = explode('_', $name);
+        $resp = self::generateCaseKebab($name);
 
-            foreach( $data as $i => $item )
-            {
-                if ( !strlen($item) ) continue;
-
-                $data[ $i ] = mb_strtolower($item);
-            }
-
-            $resp   = implode('_', $data);
-
-        } else {
-
-            $resp   = mb_strtolower($name);
-        }
+        $resp = str_replace('-','_', $resp);
 
         return $resp;
     }
