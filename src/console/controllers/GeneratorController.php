@@ -326,11 +326,9 @@ class GeneratorController extends Controller
     }
 
     /**
-     * @param string $items
-     * @param object $data
-     * @param string $template
-     *
-     * @return array
+     * @param $items
+     * @param $data
+     * @param $template
      */
     public function createCustomModel( $items, $data, $template )
     {
@@ -339,6 +337,8 @@ class GeneratorController extends Controller
         $model  = new Model();
 
         $items  = $this->getList( $items );
+
+        $template = Yii::getAlias("@console/tpl/{$template}.php");
 
         foreach ( $items as $tableName )
         {
