@@ -45,6 +45,7 @@
 ```
 
 Создать файл `console/controllers/GenerateController.php`
+с настройками генерации, к примеру:
 ```
 <?php
 
@@ -74,6 +75,19 @@ class GenerateController extends GeneratorController
             'controllerClass'       => 'backend\controllers\source\#TableName#Controller',
         ]
     ];
+    
+    // php yii generate/items
+    // генерация файлов по шаблону @common/tpl/custom.php
+    public function actionItems( $items = 'all' )
+        {
+            $data   = (object) [
+                'ns'                => 'common\\models\\items',
+                'modelClass'        => '#TableName#',
+                'baseClass'         => 'common\\models\\items\\source\\#TableName#',
+            ];
+    
+            $this->createCustomModel($items, $data, 'custom');
+        }
 }
 ```
 <br>
@@ -105,3 +119,14 @@ class GenerateController extends GeneratorController
 - **`php yii generate/crud user,news,blog`**  
 генереция ***СRUD*** для таблицы *`user,news,blog`*  
 
+
+
+# ERRORS
+
+Если вылетает ошибка вида:
+```
+Exception 'Error' with message 'Call to undefined method common\models\items\source\ModelName::primaryKey()'
+
+in ...\vendor\yiisoft\yii2-gii\src\generators\crud\default\controller.php:22
+```
+Значит модель `common\models\items\source\ModelName` наследуется не от `ActiveRecord`
