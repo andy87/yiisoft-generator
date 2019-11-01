@@ -120,7 +120,7 @@ class GeneratorController extends Controller
 
         foreach ( $result as $tableName => $item )
         {
-            echo "\r\n {$tableName} : {$item['path']}\r\n Status : {$item['status']}";
+            echo "\r\n\r\n Table: {$tableName} \r\n Path: {$item['path']}\r\n Status: {$item['status']}";
         }
     }
 
@@ -272,7 +272,7 @@ class GeneratorController extends Controller
      * задача:
      *      Сгенерировать через консоль CRUD с собственными настройками
      *
-     * @return bool
+     * @return array
      */
     public function actionCustomCrud()
     {
@@ -311,10 +311,9 @@ class GeneratorController extends Controller
         {
             $params = (object) array_merge( [], $data );
 
-            $params = Generator::insertTableCase( $params, $tableName );
+            $params = Generator::insertTableCase( (object) $params, $tableName );
 
-            $params->content = $this->classTemplate2( $params, $template );
-            //$params->content = $this->classTemplate( $params, $template );
+            $params->content = $this->classTemplate( $params, $template );
 
             $path   = Yii::getAlias('@' . str_replace('\\\\','/', $params->ns ) . '\#TableName#.php' );
 
@@ -328,6 +327,13 @@ class GeneratorController extends Controller
         return $result;
     }
 
+    /**
+     * @param string $items
+     * @param object $data
+     * @param string $template
+     *
+     * @return array
+     */
     public function createCustomModel( $items, $data, $template )
     {
         $result = [];
@@ -338,9 +344,7 @@ class GeneratorController extends Controller
 
         foreach ( $items as $tableName )
         {
-            $params = $data;
-
-            $params = Generator::insertTableCase( $params, $tableName );
+            $params = Generator::insertTableCase( $data, $tableName );
 
             $params->content = $this->classTemplateCore( $params, $template );
 
