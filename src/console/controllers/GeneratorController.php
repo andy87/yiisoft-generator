@@ -311,7 +311,7 @@ class GeneratorController extends Controller
 
             $params->content = $this->classTemplate( $params, $template );
 
-            $path   = Yii::getAlias('@' . str_replace('\\\\','/', $params->ns ) . '\#TableName#.php' );
+            $path   = Yii::getAlias('@' . str_replace(['\\\\','\\'],'/', $params->ns ) . '\#TableName#.php' );
 
             $file   = new CodeFile( $path, $params->content );
 
@@ -363,7 +363,7 @@ class GeneratorController extends Controller
         if ( file_exists($path) )
         {
             if ( is_object($data) ) $data = (array) $data;
-            
+
             $resp = Yii::$app->view->renderFile( $path, $data );
         }
 
@@ -528,11 +528,11 @@ PHP;
     {
         foreach ( $result as $tableName => $files )
         {
-            echo "\r\n\r\n  Table : `{$tableName}`";
+            echo "\r\n\r\n  Table   `{$tableName}`";
 
             foreach ( $files as $file )
             {
-                echo "\r\n    Path : {$file['path']}\r\n Status : {$file['status']}";
+                echo "\r\n   Path : {$file['path']}\r\n Status - {$file['status']}";
             }
         }
     }
