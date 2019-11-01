@@ -57,7 +57,20 @@ class GeneratorController extends Controller
      *
      * @var array
      */
-    public $default     = [];
+    public $default     = [
+        'model'         => (object) [
+            'modelClass'            => '#TableName#',
+            'ns'                    => "app\\models",
+            'baseClass'             => "yii\\base\\Model"
+        ],
+        'crud'          => (object) [
+            'modelClass'            => "app\\models\\#TableName#",
+            'viewPath'              => "backend\\views\\#table-name#",
+            'baseControllerClass'   => "yii\\web\\Controller",
+            'searchModelClass'      => "#TableName#Search",
+            'controllerClass'       => "#TableName#Controller",
+        ]
+    ];
 
     /**
      *  Фильтр со списком таблиц не учавствующих в генерации
@@ -65,45 +78,6 @@ class GeneratorController extends Controller
      * @var array
      */
     public $filter      = [ 'migration' ];
-
-    /**
-     *  Задаются стандартные настройки генерации
-     */
-    function init()
-    {
-        $camelCase  = Generator::TableNameCamelCase;
-        $kebabCase  = Generator::TableNameKebabCase;
-
-        $this->config = [
-            'model'         => (object) [
-                'modelClass'            => $camelCase,
-                'ns'                    => 'common\models',       // Например: app\\models\\items\\source
-                'baseClass'             => 'yii\base\Model'        // Например: app\\models\\base\\BaseModel
-            ],
-            'crud'          => (object) [
-                'modelClass'            => "common\\models\\source\\{$camelCase}",
-                'viewPath'              => 'backend\views\source\#table-name#',  // Например: backend\\views\\source\\#table-name#;
-                'baseControllerClass'   => "yii\web\Controller",  // Например: backend\\controllers\\base\\BackendController
-                'searchModelClass'      => 'backend\models\search\#TableName#SearchController',  // Например: backend\\models\\search\\#tableName#Controller
-                'controllerClass'       => 'backend\controllers\source\#TableName#Controller',  // Например: backend\\controllers\\search\\#tableName#Controller
-            ]
-        ];
-
-        $this->default = [
-            'model'         => (object) [
-                'modelClass'            => $camelCase,
-                'ns'                    => "app\\models",
-                'baseClass'             => "yii\\base\\Model"
-            ],
-            'crud'          => (object) [
-                'modelClass'            => "app\\models\\{$camelCase}",
-                'viewPath'              => "backend\\views\\{$kebabCase}",
-                'baseControllerClass'   => "yii\\web\\Controller",
-                'searchModelClass'      => "{$camelCase}Search",
-                'controllerClass'       =>  "{$camelCase}Controller",
-            ]
-        ];
-    }
 
     /**
      *  Генерация Model
