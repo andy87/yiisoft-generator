@@ -13,22 +13,29 @@ use andy87\yii2\generator\console\controllers\GeneratorController as Source;
  */
 class GenerateController extends Source
 {
-    public $config = [
-        'model'         => (object) [
-            'modelClass'            => '#TableName#',
-            'ns'                    => "common\\models\\items\\source",
-            'baseClass'             => "common\\models\\core\\BaseModel"
-        ],
-        'crud'          => (object) [
-            'modelClass'            => "common\\models\\items\\source\\#TableName#",
-            'viewPath'              => 'backend\views\source\#table-name#',
-            'baseControllerClass'   => "backend\\controllers\\core\\BackendController",
-            'searchModelClass'      => 'backend\models\search\#TableName#Search',
-            'controllerClass'       => 'backend\controllers\source\#TableName#Controller',
-        ]
-    ];
+    /**
+     *      Init
+     */
+    public function init ()
+    {
+        parent::init();
 
+        $this->config = [
+            'model'         => (object) [
+                'modelClass'            => '#TableName#',
+                'ns'                    => 'common\\models\\items\\source',
+                'baseClass'             => 'common\\models\\core\\BaseModel'
+            ],
+            'crud'          => (object) [
+                'modelClass'            => 'common\\models\\items\\source\\#TableName#',
+                'viewPath'              => 'backend\views\source\#table-name#',
+                'baseControllerClass'   => 'backend\\controllers\\core\\BackendController',
+                'searchModelClass'      => 'backend\models\search\#TableName#Search',
+                'controllerClass'       => 'backend\controllers\source\#TableName#Controller',
+            ]
+        ];
 
+    }
     
 
 
