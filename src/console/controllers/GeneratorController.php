@@ -37,8 +37,9 @@ use yii\helpers\StringHelper;
  */
 class GeneratorController extends Controller
 {
-    const ITEM_MODEL    = 'model';
-    const ITEM_CRUD     = 'crud';
+    const ITEM_CONTROLLER   = 'controller';
+    const ITEM_MODEL        = 'model';
+    const ITEM_CRUD         = 'crud';
     /**
      *  Кастомизация настроек генерации.
      *
@@ -334,7 +335,26 @@ class GeneratorController extends Controller
     {
         $result = [];
 
-        $model  = new Model();
+        $items  = $this->getList( $items );
+
+        $template = Yii::getAlias("@console/tpl/{$template}.php");
+
+        foreach ( $items as $tableName )
+        {
+            $result[ $tableName ] = $this->createCustomFile($tableName, $data, $template);
+        }
+
+        $this->resp( $result );
+    }
+
+    /**
+     * @param $items
+     * @param $data
+     * @param $template
+     */
+    public function createCustomController( $items, $data, $template )
+    {
+        $result = [];
 
         $items  = $this->getList( $items );
 
@@ -342,25 +362,69 @@ class GeneratorController extends Controller
 
         foreach ( $items as $tableName )
         {
-            $tableName  = Inflector::camelize(StringHelper::basename($tableName));
-
-            $params     = (object) [];
-            $params->ns         = $data->ns;
-            $params->modelClass = str_replace('#TableName#', $tableName, $data->modelClass );
-            $params->baseClass  = '\\' . str_replace('#TableName#', $tableName, $data->baseClass );
-            $params->content    = $this->classTemplateCore( $params, $template );
-
-            $alias  = str_replace(['\\\\','\\'],'/', $params->ns );
-            $path   = Yii::getAlias("@{$alias}/{$tableName}.php" );
-            $file   = new CodeFile( $path, $params->content );
-            $file   = [ Generator::insertTableCase( $file, $tableName ) ];
-
-            $result[ $tableName ] = $model->generate( $file );
+            $result[ $tableName ] = $this->createCustomFile($tableName, $data, $template, $type = self::ITEM_CONTROLLER );
         }
 
         $this->resp( $result );
     }
 
+
+    /**
+     * @param $tableName
+     * @param $data
+     * @param $template
+     * @param string $type
+     *
+     * @return array
+     */
+    public function createCustomFile( $tableName, $data, $template, $type = self::ITEM_MODEL )
+    {
+        $model  = new Model();
+
+        $filename   = $this->createdCustomFileName($tableName, $type);
+
+        $tableName  = Inflector::camelize(StringHelper::basename($tableName));
+
+        $params     = (object) [];
+        $params->ns         = $data->ns;
+        $params->modelClass = str_replace('#TableName#', $tableName, $data->modelClass );
+        $params->baseClass  = '\\' . str_replace('#TableName#', $tableName, $data->baseClass );
+        $params->content    = $this->classTemplateCore( $params, $template );
+
+        $alias  = str_replace(['\\\\','\\'],'/', $params->ns );
+        $path   = Yii::getAlias("@{$alias}/{$filename}.php" );
+        $file   = new CodeFile( $path, $params->content );
+        $file   = [ Generator::insertTableCase( $file, $tableName ) ];
+
+        $resp = $model->generate( $file );
+
+        return $resp;
+    }
+
+    /**
+     * @param $tableName
+     * @param $type
+     *
+     * @return mixed
+     */
+    public function createdCustomFileName( $tableName, $type = self::ITEM_MODEL )
+    {
+        $name  = Inflector::camelize(StringHelper::basename($tableName));
+
+        if ( $type == self::ITEM_CONTROLLER )
+        {
+            $name = "{$name}Controller";
+        }
+
+        return $name;
+    }
+
+    /**
+     * @param $data
+     * @param $path
+     *
+     * @return bool
+     */
     public function classTemplateCore( $data, $path )
     {
         $resp = false;
