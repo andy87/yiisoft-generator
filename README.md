@@ -56,12 +56,12 @@ use andy87\yii2\generator\console\controllers\GeneratorController;
 class GenerateController extends GeneratorController
 {
     public $config = [
-        'model'         => (object) [
+        'model'         => [
             'modelClass'            => '#TableName#',
             'ns'                    => "common\\models\\items\\source",
             'baseClass'             => "common\\models\\core\\BaseModel"
         ],
-        'crud'          => (object) [
+        'crud'          => [
             'modelClass'            => "common\\models\\items\\source\\#TableName#",
             'viewPath'              => 'backend\views\source\#table-name#',
             'baseControllerClass'   => "backend\\controllers\\core\\BackendController",
