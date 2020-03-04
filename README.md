@@ -59,7 +59,7 @@ class GenerateController extends GeneratorController
         'model'         => [
             'modelClass'            => '#TableName#',
             'ns'                    => "common\\models\\items\\source",
-            'baseClass'             => "common\\models\\core\\BaseModel"
+            'baseClass'             => "common\\models\\core\\BaseModel" //Default: yii\db\ActiveRecord
         ],
         'crud'          => [
             'modelClass'            => "common\\models\\items\\source\\#TableName#",
@@ -84,6 +84,9 @@ class GenerateController extends GeneratorController
     }
 }
 ```
+При использовании родительского класса требуется унаследоваться от ActiveRecord
+Создать файл `common/models/core/BaseModel`
+с настройками генерации, к примеру:
 
 Принеобходимости генерации кастомных файлов(в примере actionItems ), создать дирректорию
 `console/tpl/`
