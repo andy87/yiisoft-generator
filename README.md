@@ -80,7 +80,7 @@ class GenerateController extends GeneratorController
                 'baseClass'         => 'common\\models\\items\\source\\#TableName#',
             ];
     
-            $this->createCustomModel($items, $data, 'custom');
+            $this->createCustomModel($items, $data, 'item');
         }
 }
 ```
