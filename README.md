@@ -5,20 +5,20 @@
     <h1 align="center">Yii 2 Generator</h1>
 </p>
 
-Система для генерации Model и CRUD из таблиц DB.   
+Система для генерации Model и CRUD из таблиц DB.
 ***Задача :*** быстро генерировать Model и CRUD из консоли.
 <hr>
 
 ##### INSTALL
-Добавить в `composer.json`  
-<small>require</small>  
+Добавить в `composer.json`
+<small>require</small>
 ```
 "require": {
     ...
     "andy87/yiisoft-generator" : "1.0.1"
 },
-```  
-<small>repositories</small>  
+```
+<small>repositories</small>
 ```
 "repositories": [
     ...,
@@ -69,49 +69,89 @@ class GenerateController extends GeneratorController
             'controllerClass'       => 'backend\controllers\source\#TableName#Controller',
         ]
     ];
-    
+
     // php yii generate/items
     // генерация файлов по шаблону @common/tpl/custom.php
     public function actionItems( $items = 'all' )
-        {
-            $data   = (object) [
-                'ns'                => 'common\\models\\items',
-                'modelClass'        => '#TableName#',
-                'baseClass'         => 'common\\models\\items\\source\\#TableName#',
-            ];
-    
-            $this->createCustomModel($items, $data, 'item');
-        }
+    {
+        $data   = (object) [
+            'ns'                => 'common\\models\\items',
+            'modelClass'        => '#TableName#',
+            'baseClass'         => 'common\\models\\items\\source\\#TableName#',
+        ];
+
+        $this->createCustomModel($items, $data, 'default');
+    }
+
+   public function actionCustom( $items = 'all' )
+    {
+        $data   = (object) [
+            'ns'                => 'common\\models\\custom-items',
+            'modelClass'        => 'Custom#TableName#',
+            'baseClass'         => 'common\\models\\items\\source\\#TableName#',
+        ];
+
+        $this->createCustomModel( $items, $data, 'custom_template');
+    }
 }
 ```
+
+Принеобходимости генерации кастомных файлов(в примере actionCustom ), создать дирректорию
+`console/tpl/`
+с шаблнами для генерации, для примера потребуется сделать файл  `\console\tpl\custom_template.php`
+Пример контента файла:
+```
+<?php
+/**
+ * @var string $ns
+ * @var string $modelClass
+ * @var string $baseClass
+ */
+?>
+<?= "<?php\r\n" ?>
+
+namespace <?=$ns?>;
+
+/**
+* Class $modelClass
+*
+*      Type
+*/
+class <?=$modelClass?> extends <?=$baseClass?>
+{
+
+}
+```
+Бошльше примеров в дирректории: `\vendor\andy87\yiisoft-generator\src\tpl\*.php`
+
 <br>
 
-## Примеры консольных команд.  
+## Примеры консольных команд.
 <br>
 
-#### для генерации **Model**  
+#### для генерации **Model**
 
-- **`php yii generate/model`**  
-генереция ***Model*** для всех таблиц  
+- **`php yii generate/model`**
+генереция ***Model*** для всех таблиц
 
-- **`php yii generate/model user`**  
-генереция ***Model*** для таблицы *`user`*  
+- **`php yii generate/model user`**
+генереция ***Model*** для таблицы *`user`*
 
-- **`php yii generate/model user,news,blog`**  
-генереция ***Model*** для таблицы *`user,news,blog`*  
+- **`php yii generate/model user,news,blog`**
+генереция ***Model*** для таблицы *`user,news,blog`*
 
 <br>
 
-#### для генерации **СRUD**  
+#### для генерации **СRUD**
 
-- **`php yii generate/crud`**  
-генереция ***СRUD*** для всех таблиц  
+- **`php yii generate/crud`**
+генереция ***СRUD*** для всех таблиц
 
-- **`php yii generate/crud user`**  
-генереция ***СRUD*** для таблицы *`user`*  
+- **`php yii generate/crud user`**
+генереция ***СRUD*** для таблицы *`user`*
 
-- **`php yii generate/crud user,news,blog`**  
-генереция ***СRUD*** для таблицы *`user,news,blog`*  
+- **`php yii generate/crud user,news,blog`**
+генереция ***СRUD*** для таблицы *`user,news,blog`*
 
 
 
