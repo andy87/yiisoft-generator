@@ -82,23 +82,12 @@ class GenerateController extends GeneratorController
 
         $this->createCustomModel($items, $data, 'default');
     }
-
-   public function actionCustom( $items = 'all' )
-    {
-        $data   = (object) [
-            'ns'                => 'common\\models\\custom-items',
-            'modelClass'        => 'Custom#TableName#',
-            'baseClass'         => 'common\\models\\items\\source\\#TableName#',
-        ];
-
-        $this->createCustomModel( $items, $data, 'custom_template');
-    }
 }
 ```
 
-Принеобходимости генерации кастомных файлов(в примере actionCustom ), создать дирректорию
+Принеобходимости генерации кастомных файлов(в примере actionItems ), создать дирректорию
 `console/tpl/`
-с шаблнами для генерации, для примера потребуется сделать файл  `\console\tpl\custom_template.php`
+с шаблнами для генерации, для примера потребуется сделать файл  `\console\tpl\default.php`
 Пример контента файла:
 ```
 <?php
@@ -122,7 +111,7 @@ class <?=$modelClass?> extends <?=$baseClass?>
 
 }
 ```
-Бошльше примеров в дирректории: `\vendor\andy87\yiisoft-generator\src\tpl\*.php`
+Примеров других файлов: `\vendor\andy87\yiisoft-generator\src\tpl\*.php`
 
 <br>
 
