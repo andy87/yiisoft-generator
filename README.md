@@ -53,12 +53,6 @@ namespace console\controllers;
 
 use andy87\yii2\generator\console\controllers\GeneratorController;
 
-<?php
-
-namespace console\controllers;
-
-use andy87\yii2\generator\console\controllers\GeneratorController;
-
 class GenerateController extends GeneratorController
 {
     public $config = [
